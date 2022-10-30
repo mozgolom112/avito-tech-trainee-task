@@ -14,13 +14,92 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/test"
+            android:id="@+id/txtvCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="72dp"
+
+
+            android:fontFamily="@font/roboto_mono_medium"
+            android:textSize="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Moscow" />
+
+        <TextView
+            android:id="@+id/txtvCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono_light"
+            android:textSize="30dp"
+            app:layout_constraintStart_toStartOf="@+id/txtvCity"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCity"
+            app:text="Russia" />
+
+        <ImageView
+            android:id="@+id/imgvWeatherIcon"
+            android:layout_width="180dp"
+            android:layout_height="164dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintStart_toStartOf="@+id/txtvCity"
+            app:layout_constraintTop_toBottomOf="@+id/txtvDate"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/txtvTemperate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/roboto_mono_bold"
+            android:textSize="70dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgvWeatherIcon"
+            app:layout_constraintStart_toEndOf="@+id/imgvWeatherIcon"
+            app:layout_constraintTop_toTopOf="@+id/imgvWeatherIcon"
+            app:layout_constraintVertical_bias="0.271"
+            tools:text="19" />
+
+        <TextView
+            android:id="@+id/txtvMeasurementSys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono_thin"
+            android:text="TextView"
+            android:textSize="30dp"
+            app:layout_constraintStart_toEndOf="@+id/txtvTemperate"
+            app:layout_constraintTop_toTopOf="@+id/txtvTemperate"
+            tools:text="°C" />
+
+        <TextView
+            android:id="@+id/txtvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+
+            android:fontFamily="@font/roboto_mono_light"
+            app:layout_constraintStart_toStartOf="@+id/txtvCity"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCountry"
+            tools:text="Tue, Jun 30" />
+
+        <TextView
+            android:id="@+id/txtvDescription"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="40dp"
+            android:breakStrategy="simple"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_mono_medium"
+            android:lines="2"
+            android:textSize="15sp"
+            android:gravity="center|start"
+            app:layout_constraintBottom_toBottomOf="@+id/imgvWeatherIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txtvTemperate"
+            app:layout_constraintTop_toBottomOf="@+id/txtvTemperate"
+            tools:text="Thunderstorm with hail" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
