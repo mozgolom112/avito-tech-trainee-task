@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="ru.mozgolom112.weatherapp.ui.weatherdetails.WeatherDetailsViewModel" />
@@ -11,16 +12,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
 
         <TextView
             android:id="@+id/txtvCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="72dp"
-
-
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_mono_medium"
             android:textSize="50dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,13 +35,14 @@
             android:textSize="30dp"
             app:layout_constraintStart_toStartOf="@+id/txtvCity"
             app:layout_constraintTop_toBottomOf="@+id/txtvCity"
-            app:text="Russia" />
+            tools:text="Russia" />
 
         <ImageView
             android:id="@+id/imgvWeatherIcon"
-            android:layout_width="180dp"
-            android:layout_height="164dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="@+id/txtvCity"
             app:layout_constraintTop_toBottomOf="@+id/txtvDate"
             app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -56,14 +57,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/imgvWeatherIcon"
             app:layout_constraintStart_toEndOf="@+id/imgvWeatherIcon"
             app:layout_constraintTop_toTopOf="@+id/imgvWeatherIcon"
-            app:layout_constraintVertical_bias="0.271"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="19" />
 
         <TextView
             android:id="@+id/txtvMeasurementSys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_mono_thin"
+            android:fontFamily="@font/roboto_mono_medium"
             android:text="TextView"
             android:textSize="30dp"
             app:layout_constraintStart_toEndOf="@+id/txtvTemperate"
@@ -77,6 +78,7 @@
             android:layout_marginTop="12dp"
 
             android:fontFamily="@font/roboto_mono_light"
+            android:textSize="14dp"
             app:layout_constraintStart_toStartOf="@+id/txtvCity"
             app:layout_constraintTop_toBottomOf="@+id/txtvCountry"
             tools:text="Tue, Jun 30" />
@@ -90,15 +92,92 @@
             android:breakStrategy="simple"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_mono_medium"
-            android:lines="2"
-            android:textSize="15sp"
             android:gravity="center|start"
+            android:lines="2"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/imgvWeatherIcon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/txtvTemperate"
             app:layout_constraintTop_toBottomOf="@+id/txtvTemperate"
             tools:text="Thunderstorm with hail" />
+
+        <TextView
+            android:id="@+id/txtvFeelsLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_mono_light"
+            android:text="Feels like +12°C"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgvWeatherIcon" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:background="#00000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lstvParameters"
+            app:tabIndicatorColor="#000000"
+            app:tabSelectedTextColor="#000000"
+            app:tabTextColor="@android:color/secondary_text_light">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tomorrow" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Next 7 Days" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <ListView
+
+            android:id="@+id/lstvParameters"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvFeelsLike"
+            tools:listitem="@layout/item_forecast_detail">
+
+
+        </ListView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fadeScrollbars="false"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/item_hour_forecast" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
