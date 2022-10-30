@@ -12,6 +12,6 @@ interface WeatherApi {
         @Query("lon")
         longitude: String,
         @Query("limit")
-        limit: Int = 7
+        limit: Int = 2
     ): NetworkWeather
 }

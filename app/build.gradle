@@ -13,7 +13,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +54,10 @@ dependencies {
     // Moshi for parsing the JSON format
     implementation "com.squareup.moshi:moshi:1.14.0"
     implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
+
+    //Coil
+    implementation 'io.coil-kt:coil:1.4.0'
+    implementation 'io.coil-kt:coil-svg:1.4.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
