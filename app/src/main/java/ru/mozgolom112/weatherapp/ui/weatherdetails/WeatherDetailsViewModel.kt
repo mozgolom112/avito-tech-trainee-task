@@ -12,28 +12,32 @@ import ru.mozgolom112.weatherapp.utils.asDomainModel
 class WeatherDetailsViewModel : ViewModel() {
 
     var dailyWeathers: List<DailyWeather>? = null
-    private val _selectedDay = MutableLiveData<DailyWeather?>(null)
-    val selectedDay: LiveData<DailyWeather?> //selectedDayWeather
-        get() = _selectedDay
+    private val _selectedDayWeather = MutableLiveData<DailyWeather?>(null)
+    val selectedDayWeather: LiveData<DailyWeather?>
+        get() = _selectedDayWeather
 
     init {
         viewModelScope.launch {
-            var response = RetrofitClient.weatherApi.getWeatherByLocation("55.75396", "37.620393")
+            val response = RetrofitClient.weatherApi.getWeatherByLocation("55.75396", "37.620393")
             dailyWeathers = response.asDomainModel()
-            println(dailyWeathers?.get(0).toString())
-            _selectedDay.value = dailyWeathers?.get(0)
+            _selectedDayWeather.value = getTodayWeather()
         }
-
     }
 
-    fun onTodayTabClick(){
-        _selectedDay.value = dailyWeathers?.get(0)
+    fun onTodayTabClick() {
+        _selectedDayWeather.value = dailyWeathers?.get(0)
     }
-    fun onTomorrowTabClick(){
-        _selectedDay.value = dailyWeathers?.get(1)
+
+    fun onTomorrowTabClick() {
+        _selectedDayWeather.value = getTomorrowWeather()
     }
-    fun onSevenDayForecastTabClick(){
+
+    fun onSevenDayForecastTabClick() {
         //_selectedDay.value = dailyWeathers?.get()
     }
+
+
+    private fun getTodayWeather() = dailyWeathers?.get(0)
+    private fun getTomorrowWeather() = dailyWeathers?.get(1)
 }
 

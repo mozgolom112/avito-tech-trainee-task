@@ -12,23 +12,7 @@ data class DailyWeather(
     val hours: List<Hour>?
 )
 
-data class City(
-    val lat: Double,
-    val lon: Double,
-    val cityName: String? = null,
-    val country: String? = null
-)
 
-data class WeatherParameter(
-    val parameter: String,
-    val value: String,
-    val drawableIcon: Int
-)
 
-data class Hour(
-    val time: String,
-    val hour:String,
-    val temp: Int?,
-    val icon: String,
-    val condition: String
-)
+
+
