@@ -15,26 +15,20 @@
         android:layout_margin="5dp"
         android:background="#fceabb">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+
+        <ImageView
+            android:id="@+id/imgvIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            app:cardCornerRadius="8dp"
+            android:background="@drawable/rounded_corner_8dp_without_border"
+            android:scaleType="centerCrop"
+            app:imageDrawable="@{weatherParameter.drawableIcon}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imgvIcon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:scaleType="centerCrop"
-                app:imageDrawable="@{weatherParameter.drawableIcon}" />
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtvParameterValue"
@@ -48,7 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/imgvIcon"
             tools:text="23°C" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

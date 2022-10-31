@@ -1,0 +1,89 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="city"
+            type="ru.mozgolom112.weatherapp.domain.City" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corner_24dp_without_border">
+
+        <TextView
+            android:id="@+id/txtvCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_mono_bold"
+            android:text="@{city.cityName}"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtvCountryName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Moscow" />
+
+        <TextView
+            android:id="@+id/txtvCountryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_mono_medium"
+            android:text="@{city.country}"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtvCityName"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCityName"
+            tools:text="Russia" />
+
+        <ImageButton
+            android:id="@+id/btnRemoveSavedCity"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="24dp"
+            android:background="#00000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cancel_close_cross_delete"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/txtvLat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/roboto_mono_light"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtvLon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setLatRu="@{city.lat}"
+            android:visibility="gone"
+            tools:text="Latitude: 52.31"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/txtvLon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono_light"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtvLat"
+            app:layout_constraintTop_toBottomOf="@+id/txtvLat"
+            app:setLonRu="@{city.lon}"
+            android:visibility="gone"
+            tools:text="Longitude: 33.31"
+            tools:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

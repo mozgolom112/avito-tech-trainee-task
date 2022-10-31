@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
+
+        <TextView
+            android:id="@+id/txtvCitySearch"
+            style="@style/TextAppearance.AppCompat"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_corner"
+            android:gravity="center_vertical"
+            android:hint="Введите название"
+            android:padding="10dp"
+            android:textSize="18dp"
+            app:drawableStartCompat="@drawable/search_icon2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtvCurrentCityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_mono_medium"
+            android:text="Текущий выбранный город"
+            android:textSize="20dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCitySearch"
+            tools:text="Текущий выбранный город"
+            tools:visibility="visible" />
+
+        <include
+            android:id="@+id/currentCityItem"
+            layout="@layout/item_saved_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCurrentCityLabel"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/txtvFavoriteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_mono_medium"
+            android:text="Избранные города"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentCityItem"
+            tools:text="Избранные города" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclevFavoriteCities"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="28dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvFavoriteLabel"
+            tools:listitem="@layout/item_saved_city" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

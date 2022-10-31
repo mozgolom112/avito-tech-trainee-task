@@ -16,13 +16,13 @@
         android:background="@drawable/gradient_background">
 
         <TextView
-            android:id="@+id/txtvCity"
+            android:id="@+id/txtvCityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_mono_medium"
-            android:text="@{vm.city.cityName}"
+            android:text="@{vm.selectedCity.cityName}"
             android:textSize="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,10 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono_light"
-            android:text="@{vm.city.country}"
+            android:text="@{vm.selectedCity.country}"
             android:textSize="30dp"
-            app:layout_constraintStart_toStartOf="@+id/txtvCity"
-            app:layout_constraintTop_toBottomOf="@+id/txtvCity"
+            app:goneIfNull="@{vm.selectedCity.country}"
+            app:layout_constraintStart_toStartOf="@+id/txtvCityName"
+            app:layout_constraintTop_toBottomOf="@+id/txtvCityName"
             tools:text="Russia" />
 
         <ImageView
@@ -84,7 +85,7 @@
             android:fontFamily="@font/roboto_mono_light"
             android:text="@{vm.selectedDayWeather.date}"
             android:textSize="14dp"
-            app:layout_constraintStart_toStartOf="@+id/txtvCity"
+            app:layout_constraintStart_toStartOf="@+id/txtvCityName"
             app:layout_constraintTop_toBottomOf="@+id/txtvCountry"
             tools:text="Tue, Jun 30" />
 
@@ -175,7 +176,7 @@
             android:id="@+id/secondWeatherDetail"
             layout="@layout/item_forecast_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
@@ -187,12 +188,24 @@
             android:id="@+id/firstWeatherDetail"
             layout="@layout/item_forecast_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/secondWeatherDetail" />
+
+        <ImageView
+            android:id="@+id/btnNavigateToSavedCity"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{()->vm.onBtnNavigateToSavedCityClick()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
