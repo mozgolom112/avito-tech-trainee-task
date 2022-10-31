@@ -22,7 +22,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_mono_medium"
-            android:text="@{vm.selectedDayWeather.city.cityName}"
+            android:text="@{vm.city.cityName}"
             android:textSize="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono_light"
-            android:text="@{vm.selectedDayWeather.city.country}"
+            android:text="@{vm.city.country}"
             android:textSize="30dp"
             app:layout_constraintStart_toStartOf="@+id/txtvCity"
             app:layout_constraintTop_toBottomOf="@+id/txtvCity"
@@ -134,7 +134,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/secondWeatherDetail"
+            app:layout_constraintTop_toBottomOf="@+id/firstWeatherDetail"
             app:tabIndicatorColor="#000000"
             app:tabSelectedTextColor="#000000"
             app:tabTextColor="@android:color/secondary_text_light">
@@ -172,7 +172,7 @@
             tools:listitem="@layout/item_hour_forecast" />
 
         <include
-            android:id="@+id/firstWeatherDetail"
+            android:id="@+id/secondWeatherDetail"
             layout="@layout/item_forecast_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtvFeelsLike" />
 
         <include
-            android:id="@+id/secondWeatherDetail"
+            android:id="@+id/firstWeatherDetail"
             layout="@layout/item_forecast_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,6 +193,6 @@
             android:layout_marginEnd="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firstWeatherDetail" />
+            app:layout_constraintTop_toBottomOf="@+id/secondWeatherDetail" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

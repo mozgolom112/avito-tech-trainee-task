@@ -1,0 +1,93 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="dailyWeather"
+            type="ru.mozgolom112.weatherapp.domain.DailyWeather" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="34dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="#fceabb">
+
+            <TextView
+                android:id="@+id/txtvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/roboto_mono_medium"
+                android:text="@{dailyWeather.date}"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgvIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgvIcon"
+                tools:text="2022-10-31" />
+
+            <ImageView
+                android:id="@+id/imgvIcon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                app:imageUrl="@{dailyWeather.iconUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtvTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/roboto_mono_bold"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgvIcon"
+                app:layout_constraintEnd_toStartOf="@+id/imgvIcon"
+                app:layout_constraintTop_toTopOf="@+id/imgvIcon"
+                app:setCelsiusTemp="@{dailyWeather.temp}"
+                tools:text="23°C" />
+
+            <include
+                android:id="@+id/secondWeatherDetail"
+                layout="@layout/item_forecast_short_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/thirdWeatherDetail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/firstWeatherDetail"
+                app:layout_constraintTop_toTopOf="@+id/thirdWeatherDetail" />
+
+            <include
+                android:id="@+id/firstWeatherDetail"
+                layout="@layout/item_forecast_short_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/secondWeatherDetail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/thirdWeatherDetail" />
+
+            <include
+                android:id="@+id/thirdWeatherDetail"
+                layout="@layout/item_forecast_short_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/secondWeatherDetail"
+                app:layout_constraintTop_toBottomOf="@+id/imgvIcon"
+                app:layout_constraintVertical_bias="1.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

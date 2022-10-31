@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:setHourTemp="@{hour.temp}"
+                app:setCelsiusTemp="@{hour.temp}"
                 tools:text="23°C" />
 
             <ImageView

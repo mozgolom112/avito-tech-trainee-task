@@ -4,13 +4,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import ru.mozgolom112.weatherapp.R
 
-@BindingAdapter("setHourTemp")
-fun setHourTemp(textView: TextView, temp: Int) {
-    textView.apply {
-        text = resources.getString(R.string.degree_celsius_with_value, temp)
-    }
-}
-
 @BindingAdapter("setHour")
 fun setHour(textView: TextView, hour: String) {
     textView.text = when (hour) {

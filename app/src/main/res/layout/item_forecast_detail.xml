@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="weatherDetail"
+            name="weatherParameter"
             type="ru.mozgolom112.weatherapp.domain.WeatherParameter" />
     </data>
     <androidx.cardview.widget.CardView
@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:background="#fceacc"
                     android:scaleType="centerCrop"
-                    app:imageDrawable="@{weatherDetail.drawableIcon}"
+                    app:imageDrawable="@{weatherParameter.drawableIcon}"
                     />
             </androidx.cardview.widget.CardView>
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/roboto_mono_medium"
-                android:text="@{weatherDetail.parameter}"
+                android:text="@{weatherParameter.parameter}"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_mono_medium"
-                android:text="@{weatherDetail.value}"
+                android:text="@{weatherParameter.value}"
                 android:textSize="14dp"
                 tools:text="23 мм"
                 app:layout_constraintBottom_toBottomOf="parent"
