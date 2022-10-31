@@ -19,6 +19,10 @@ class SavedCitiesViewModel(
     val navigateToWeatherDetailsWithCity: LiveData<City?>
         get() = _navigateToWeatherDetailsWithCity
 
+    private val _isNavigatedToSearchCity = MutableLiveData<Boolean>(false)
+    val isNavigatedToSearchCity: LiveData<Boolean>
+        get() = _isNavigatedToSearchCity
+
     init {
 
         _savedCities.value = TEMP_LIST_OF_CITIES
@@ -34,7 +38,12 @@ class SavedCitiesViewModel(
         _navigateToWeatherDetailsWithCity.value = city
     }
 
+    fun navigateToSearchCity() {
+        _isNavigatedToSearchCity.value = true
+    }
+
     fun doneNavigating(){
         _navigateToWeatherDetailsWithCity.value = null
+        _isNavigatedToSearchCity.value = false
     }
 }

@@ -63,9 +63,14 @@ class SavedCitiesFragment : Fragment() {
                     citiesItemAdapter.submitList(it)
                 }
             }
-            navigateToWeatherDetailsWithCity.observe(viewLifecycleOwner){
+            navigateToWeatherDetailsWithCity.observe(viewLifecycleOwner) {
                 if (it != null) {
                     navigateToWeatherDetailsFragment(it)
+                }
+            }
+            isNavigatedToSearchCity.observe(viewLifecycleOwner) { isNavigated ->
+                if (isNavigated) {
+                    navigateToSearchCityFragment()
                 }
             }
         }
@@ -77,6 +82,9 @@ class SavedCitiesFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             recyclevFavoriteCities.apply {
                 adapter = citiesItemAdapter
+            }
+            txtvCitySearch.setOnClickListener {
+                viewModel.navigateToSearchCity()
             }
         }
     }
@@ -93,18 +101,29 @@ class SavedCitiesFragment : Fragment() {
             currentCityItem.city = it
             currentCityItem.root.setGoneOrVisible(isGone = false)
             txtvCurrentCityLabel.setGoneOrVisible(isGone = false)
-            currentCityItem.root.setOnClickListener { viewModel.navigateToWeatherDetails(currentCityItem.city as City) }
+            currentCityItem.root.setOnClickListener {
+                viewModel.navigateToWeatherDetails(
+                    currentCityItem.city as City
+                )
+            }
         }
 
+    }
+
+    private fun navigateToSearchCityFragment() {
+        val action = SavedCitiesFragmentDirections.actionSavedCitiesFragmentToSearchCityFragment()
+        findNavController().navigate(action)
+        viewModel.doneNavigating()
     }
 
     private fun navigateToWeatherDetailsFragment(selectedCity: City) {
         if (selectedCity == viewModel.currentCity) {
             findNavController().popBackStack() //просто возращяемся на наш экран
         } else {
-            val action = SavedCitiesFragmentDirections.actionSavedCitiesFragmentToWeatherDetailsFragment(
-                selectedCity
-            )
+            val action =
+                SavedCitiesFragmentDirections.actionSavedCitiesFragmentToWeatherDetailsFragment(
+                    selectedCity
+                )
             findNavController().navigate(action)
         }
         viewModel.doneNavigating()
