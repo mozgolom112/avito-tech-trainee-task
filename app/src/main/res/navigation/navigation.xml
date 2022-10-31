@@ -41,5 +41,16 @@
         <action
             android:id="@+id/action_savedCitiesFragment_to_weatherDetailsFragment"
             app:destination="@id/weatherDetailsFragment" />
+        <action
+            android:id="@+id/action_savedCitiesFragment_to_searchCityFragment"
+            app:destination="@id/searchCityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchCityFragment"
+        android:name="ru.mozgolom112.weatherapp.ui.searchcity.SearchCityFragment"
+        android:label="SearchCityFragment" >
+        <action
+            android:id="@+id/action_searchCityFragment_to_weatherDetailsFragment"
+            app:destination="@id/weatherDetailsFragment" />
     </fragment>
 </navigation>
