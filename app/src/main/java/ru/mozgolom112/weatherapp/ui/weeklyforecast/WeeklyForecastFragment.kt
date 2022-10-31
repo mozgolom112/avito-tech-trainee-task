@@ -24,6 +24,10 @@ class WeeklyForecastFragment : Fragment() {
         return viewModel
     }
 
+    private companion object {
+        const val layoutId = R.layout.fragment_weekly_forecast
+    }
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +42,7 @@ class WeeklyForecastFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentWeeklyForecastBinding =
-        DataBindingUtil.inflate(inflater, R.layout.fragment_weekly_forecast, container, false)
+        DataBindingUtil.inflate(inflater, layoutId, container, false)
 
     private fun setObservers(binding: FragmentWeeklyForecastBinding) {
         viewModel.apply {
@@ -53,7 +57,7 @@ class WeeklyForecastFragment : Fragment() {
 
     private fun fulfillBinding(binding: FragmentWeeklyForecastBinding) {
         binding.apply {
-            txtvCity.text = viewModel.city.cityName
+            txtvCityName.text = viewModel.city.cityName
         }
     }
 }

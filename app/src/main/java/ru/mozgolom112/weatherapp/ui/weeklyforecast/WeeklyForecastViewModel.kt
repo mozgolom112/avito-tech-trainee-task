@@ -18,7 +18,7 @@ class WeeklyForecastViewModel(val city: City) : ViewModel() {
     init {
         viewModelScope.launch {
             val response = RetrofitClient.weatherApi.getWeatherByLocation(
-                city.lon.toString(),
+                city.lat.toString(),
                 city.lon.toString(),
                 limit = 7
             )

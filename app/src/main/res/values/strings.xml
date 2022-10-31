@@ -9,4 +9,8 @@
     <string name="next_7_days_ru">На 7 дней</string>
     <string name="tomorrow_ru">Завтра</string>
     <string name="today_ru">Сегодня</string>
+    <string name="lat_ru">Широта: %1$fe2</string>
+    <string name="lon_ru">Долгота: %1$fe2</string>
+    <string name="lat_en">Latitude: %1$fe2</string>
+    <string name="lon_en">Longitude: %1$fe2</string>
 </resources>

@@ -13,6 +13,14 @@
         <action
             android:id="@+id/action_weatherDetailsFragment_to_weeklyForecastFragment"
             app:destination="@id/weeklyForecastFragment" />
+        <action
+            android:id="@+id/action_weatherDetailsFragment_to_savedCitiesFragment"
+            app:destination="@id/savedCitiesFragment" />
+        <argument
+            android:name="selectedCity"
+            app:argType="ru.mozgolom112.weatherapp.domain.City"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/weeklyForecastFragment"
@@ -21,5 +29,17 @@
         <argument
             android:name="city"
             app:argType="ru.mozgolom112.weatherapp.domain.City" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedCitiesFragment"
+        android:name="ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesFragment"
+        android:label="SavedCitiesFragment" >
+        <argument
+            android:name="currentCity"
+            app:argType="ru.mozgolom112.weatherapp.domain.City"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_savedCitiesFragment_to_weatherDetailsFragment"
+            app:destination="@id/weatherDetailsFragment" />
     </fragment>
 </navigation>

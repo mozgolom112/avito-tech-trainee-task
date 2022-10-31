@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -17,9 +18,16 @@ import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.adapters.HourItemAdapter
 import ru.mozgolom112.weatherapp.adapters.diffcallbacks.HourItemDiffCallback
 import ru.mozgolom112.weatherapp.databinding.FragmentWeatherDetailsBinding
+import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.domain.DailyWeather
+import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesFragmentArgs
+import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesViewModel
+import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesViewModelFactory
+import ru.mozgolom112.weatherapp.utils.DEFAULT_CITY
 import ru.mozgolom112.weatherapp.utils.extensions.getFirst
 import ru.mozgolom112.weatherapp.utils.extensions.getSecond
+import java.lang.Exception
+import java.lang.reflect.Executable
 
 class WeatherDetailsFragment : Fragment() {
 
@@ -28,8 +36,14 @@ class WeatherDetailsFragment : Fragment() {
     private val hourItemAdapter: HourItemAdapter by lazy { HourItemAdapter() }
 
     private fun initViewModel(): WeatherDetailsViewModel {
-        val viewModel: WeatherDetailsViewModel by viewModels()
+        var selectedCity = navArgs<WeatherDetailsFragmentArgs>().value.selectedCity
+        val viewModelFactory = WeatherDetailsViewModelFactory(selectedCity)
+        val viewModel: WeatherDetailsViewModel by viewModels { viewModelFactory }
         return viewModel
+    }
+
+    private companion object {
+        const val layoutId = R.layout.fragment_weather_details
     }
 
     override fun onCreateView(
@@ -46,7 +60,7 @@ class WeatherDetailsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentWeatherDetailsBinding =
-        DataBindingUtil.inflate(inflater, R.layout.fragment_weather_details, container, false)
+        DataBindingUtil.inflate(inflater, layoutId, container, false)
 
 
     private fun setObservers(binding: FragmentWeatherDetailsBinding) {
@@ -56,17 +70,16 @@ class WeatherDetailsFragment : Fragment() {
                 hourItemAdapter.submitList(dailyWeather?.hours)
             }
             navigateToWeeklyForecast.observe(viewLifecycleOwner) { isNavigated ->
-                if (isNavigated){
+                if (isNavigated) {
                     navigateToWeeklyForecastFragment()
                 }
             }
+            navigateToSavedCities.observe(viewLifecycleOwner) { isNavigated ->
+                if (isNavigated) {
+                    navigateToSavedCitiesFragment()
+                }
+            }
         }
-    }
-
-    private fun navigateToWeeklyForecastFragment() {
-        val action = WeatherDetailsFragmentDirections.actionWeatherDetailsFragmentToWeeklyForecastFragment(viewModel.city)
-        findNavController().navigate(action)
-        viewModel.doneNavigating()
     }
 
     private fun updateDetailUi(
@@ -80,7 +93,6 @@ class WeatherDetailsFragment : Fragment() {
     }
 
     private fun fulfillBinding(binding: FragmentWeatherDetailsBinding) {
-        //binding.include.weatherDetail =viewModel.selectedDay.value?.weatherParameters?.get(1)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = this@WeatherDetailsFragment.viewModel
@@ -89,22 +101,48 @@ class WeatherDetailsFragment : Fragment() {
                 adapter = hourItemAdapter
             }
 
-            tabLayoutDayForecastPicker.addOnTabSelectedListener(object :
-                TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    Log.i("Tab", "${tab?.text}")
-                    Log.i("Tab", "${tab?.position}")
-                    when (tab?.position) {
-                        0 -> viewModel.onTodayTabClick()
-                        1 -> viewModel.onTomorrowTabClick()
-                        2 -> viewModel.onSevenDayForecastTabClick()
-                    }
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {}
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
-            })
+            setOnTabSelectedListener()
         }
 
+    }
+
+    private fun FragmentWeatherDetailsBinding.setOnTabSelectedListener() {
+        tabLayoutDayForecastPicker.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Log.i("Tab", "${tab?.text}")
+                Log.i("Tab", "${tab?.position}")
+                when (tab?.position) {
+                    0 -> viewModel.onTodayTabClick()
+                    1 -> viewModel.onTomorrowTabClick()
+                    2 -> viewModel.onSevenDayForecastTabClick()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+
+    //Navigation
+    private fun navigateToSavedCitiesFragment() {
+        Log.i("WeatherDetails", "navigateToSavedCitiesFragment ENTRY")
+        val action =
+            WeatherDetailsFragmentDirections.actionWeatherDetailsFragmentToSavedCitiesFragment(
+                viewModel.selectedCity
+            )
+        findNavController().navigate(action)
+        Log.i("WeatherDetails", "navigateToSavedCitiesFragment DONE")
+        viewModel.doneNavigating()
+    }
+
+    private fun navigateToWeeklyForecastFragment() {
+        val action =
+            WeatherDetailsFragmentDirections.actionWeatherDetailsFragmentToWeeklyForecastFragment(
+                viewModel.selectedCity
+            )
+        findNavController().navigate(action)
+        viewModel.doneNavigating()
     }
 }
