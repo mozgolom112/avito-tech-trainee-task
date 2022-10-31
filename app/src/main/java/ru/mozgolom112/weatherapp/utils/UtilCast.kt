@@ -1,5 +1,6 @@
 package ru.mozgolom112.weatherapp.utils
 
+import android.location.Address
 import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.domain.DailyWeather
@@ -119,4 +120,13 @@ fun getIconDrawableRes(type: WeatherDetailTypes): Int = when (type) {
     PREC -> R.drawable.prec_icon
     SUNRISE -> R.drawable.sunrise_icon
     SUNSET -> R.drawable.sunset_icon
+}
+
+fun List<Address>.asDomainModel(): List<City> = map{
+    City(
+        lat = it.latitude,
+        lon = it.longitude,
+        cityName = it.featureName,
+        country = it.countryName
+    )
 }
