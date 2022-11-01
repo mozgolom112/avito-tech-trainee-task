@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -50,6 +49,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+    //Location
+    implementation 'com.google.android.gms:play-services-location:21.0.0'
 
     //Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
