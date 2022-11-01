@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import ru.mozgolom112.weatherapp.R
 
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, icon_url: String?) {
@@ -17,21 +18,16 @@ fun setImageUrl(imageView: ImageView, icon_url: String?) {
                         add(SvgDecoder(imageView.context))
                     }.build()
                 val request = ImageRequest.Builder(imageView.context).apply {
-                    //error(errorImg)
-                    //placeholder(errorImg)
+                    error(R.drawable.broken_img_icon)
+                    placeholder(R.drawable.loading_animation)
                     data(it).decoder(SvgDecoder(imageView.context))
                 }.target(imageView).build()
                 imageLoader.enqueue(request)
             } else {
                 val imageLoader = ImageLoader(imageView.context)
                 val request = ImageRequest.Builder(imageView.context).apply {
-//                    if (cache) {
-//                        memoryCachePolicy(CachePolicy.ENABLED)
-//                    } else {
-//                        memoryCachePolicy(CachePolicy.DISABLED)
-//                    }
-//                    error(errorImg)
-//                    placeholder(errorImg)
+                    error(R.drawable.broken_img_icon)
+                    placeholder(R.drawable.loading_animation)
                     data("$it")
                 }.target(imageView).build()
                 imageLoader.enqueue(request)
