@@ -1,62 +1,26 @@
 package ru.mozgolom112.weatherapp.ui
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
 import android.provider.Settings
-import android.util.Log
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.*
-import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.location.LocationServices
 import ru.mozgolom112.weatherapp.R
-import java.util.*
+import ru.mozgolom112.weatherapp.utils.consts.LOCATION_PERMISSION_REQUEST_ID
+import ru.mozgolom112.weatherapp.utils.extensions.checkPermissions
+import ru.mozgolom112.weatherapp.utils.extensions.requestLocationPermissions
+import ru.mozgolom112.weatherapp.utils.snackbars.showSnackBarWithMessage
+import ru.mozgolom112.weatherapp.utils.snackbars.showSnackBarWithSettings
 
 class WeatherAppActivity : AppCompatActivity() {
-    private val PERMISSION_ID = 112
     private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_app)
         //проверка на разрешения
-        if (!checkPermissions()) requestPermissions()
-    }
-
-    private fun checkPermissions(): Boolean {
-        if (
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
-    }
-
-    private fun requestPermissions() {
-
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
-        )
+        if (!checkPermissions(this)) requestLocationPermissions(this)
     }
 
     override fun onRequestPermissionsResult(
@@ -65,19 +29,14 @@ class WeatherAppActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_ID) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                Snackbar.make(findViewById(R.id.nav_host_fragment), "Использование геолакация разрешено", Snackbar.LENGTH_LONG)
-                    .show()
+                showSnackBarWithMessage(findViewById(R.id.nav_host_fragment), "Использование геолакации разрешено")
             } else {
-                Snackbar.make(findViewById(R.id.nav_host_fragment), "Геолакация недоступна. Измените настройки приложения.", Snackbar.LENGTH_LONG)
-
-                    .setAction("Настройки") {
-
-                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                        startActivity(intent)
-                    }
-                    .show()
+                showSnackBarWithSettings(
+                    findViewById(R.id.nav_host_fragment),
+                    "Геолакация недоступна. Измените настройки приложения."
+                ) { startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
             }
         }
     }

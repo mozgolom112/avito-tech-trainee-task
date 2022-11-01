@@ -8,26 +8,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.adapters.HourItemAdapter
-import ru.mozgolom112.weatherapp.adapters.diffcallbacks.HourItemDiffCallback
 import ru.mozgolom112.weatherapp.databinding.FragmentWeatherDetailsBinding
-import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.domain.DailyWeather
-import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesFragmentArgs
-import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesViewModel
-import ru.mozgolom112.weatherapp.ui.savedcities.SavedCitiesViewModelFactory
-import ru.mozgolom112.weatherapp.utils.DEFAULT_CITY
+import ru.mozgolom112.weatherapp.repository.city.CityRepository
 import ru.mozgolom112.weatherapp.utils.extensions.getFirst
 import ru.mozgolom112.weatherapp.utils.extensions.getSecond
-import java.lang.Exception
-import java.lang.reflect.Executable
 
 class WeatherDetailsFragment : Fragment() {
 
@@ -37,7 +27,8 @@ class WeatherDetailsFragment : Fragment() {
 
     private fun initViewModel(): WeatherDetailsViewModel {
         var selectedCity = navArgs<WeatherDetailsFragmentArgs>().value.selectedCity
-        val viewModelFactory = WeatherDetailsViewModelFactory(selectedCity)
+        var cityRepository = CityRepository(requireContext())
+        val viewModelFactory = WeatherDetailsViewModelFactory(requireContext(), selectedCity)
         val viewModel: WeatherDetailsViewModel by viewModels { viewModelFactory }
         return viewModel
     }

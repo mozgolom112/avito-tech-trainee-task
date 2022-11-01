@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.mozgolom112.weatherapp.domain.City
-import ru.mozgolom112.weatherapp.utils.TEMP_LIST_OF_CITIES
+import ru.mozgolom112.weatherapp.utils.consts.TEMP_LIST_OF_CITIES
 
 class SavedCitiesViewModel(
     val currentCity: City?

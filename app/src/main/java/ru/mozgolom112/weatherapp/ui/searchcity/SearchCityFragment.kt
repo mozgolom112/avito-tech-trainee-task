@@ -1,12 +1,8 @@
 package ru.mozgolom112.weatherapp.ui.searchcity
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
@@ -15,19 +11,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.adapters.CitiesItemAdapter
 import ru.mozgolom112.weatherapp.databinding.FragmentSearchCityBinding
 import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.repository.location.LocationProvider
-import ru.mozgolom112.weatherapp.utils.extensions.setGoneOrVisible
+import ru.mozgolom112.weatherapp.utils.extensions.*
+import ru.mozgolom112.weatherapp.utils.hidekeyboard.hideKeyboard
+import ru.mozgolom112.weatherapp.utils.snackbars.showSnackBarWithMessage
+import ru.mozgolom112.weatherapp.utils.snackbars.showSnackBarWithSettings
 import java.util.*
 
 class SearchCityFragment : Fragment() {
@@ -46,9 +44,7 @@ class SearchCityFragment : Fragment() {
     }
 
     private fun initViewModel(): SearchCityViewModel {
-        val geocoder = Geocoder(requireContext(), Locale("RU"))
-        val locationProvider = LocationProvider(requireContext())
-        val viewModelFactory = SearchCityViewModelFactory(geocoder, locationProvider)
+        val viewModelFactory = SearchCityViewModelFactory(requireContext())
         val viewModel: SearchCityViewModel by viewModels { viewModelFactory }
         return viewModel
     }
@@ -89,13 +85,13 @@ class SearchCityFragment : Fragment() {
                 navigateToWeatherDetailsFragment(it)
             }
         }
-        errorMessage.observe(viewLifecycleOwner){ errorMessage->
-            if (errorMessage!=null){
-                showSnack(errorMessage)
+        errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            if (errorMessage != null) {
+                hideKeyboard(requireActivity())
+                showSnackBar(errorMessage)
             }
         }
     }
-
 
 
     private fun areCitiesAvailable(binding: FragmentSearchCityBinding, isAvailable: Boolean) {
@@ -118,7 +114,7 @@ class SearchCityFragment : Fragment() {
         btnBack.setOnClickListener { navigateBack() }
 
         btnGeoLocation.setOnClickListener {
-            getLastLocation()
+            obtainCurrentLocation()
         }
 
         txtvCitySearch.addTextChangedListener(object : TextWatcher {
@@ -126,18 +122,26 @@ class SearchCityFragment : Fragment() {
                 Log.i("SearchFragment", "${input.toString()}")
                 viewModel.updateAvailableCities(input.toString())
             }
-
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
-
         })
     }
 
-    private fun navigateBack() {
-        findNavController().popBackStack()
-        viewModel.doneNavigating()
+    private fun obtainCurrentLocation() {
+        if (checkPermissions(requireContext())) {
+            if (isLocationEnabled(requireActivity())) {
+                viewModel.setCurrentLocation()
+            } else {
+                showSnackBarWithSettings(requireView(), "Включите геолакацию.") {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            }
+        } else {
+            requestLocationPermissions(requireActivity())
+        }
     }
 
+    //Навигация
     private fun navigateToWeatherDetailsFragment(selectedCity: City) {
         val action = SearchCityFragmentDirections.actionSearchCityFragmentToWeatherDetailsFragment(
             selectedCity
@@ -146,76 +150,14 @@ class SearchCityFragment : Fragment() {
         viewModel.doneNavigating()
     }
 
+    private fun navigateBack() {
+        findNavController().popBackStack()
+        viewModel.doneNavigating()
+    }
+
     //SnackBar
-    private fun showSnack(message: String){
-        Snackbar.make(
-            requireContext(),
-            requireView(),
-            message,
-            Snackbar.LENGTH_LONG
-        ).show()
+    private fun showSnackBar(message: String) {
+        showSnackBarWithMessage(requireView(),message)
         viewModel.showErrorMessage()
-    }
-
-    //location
-    @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                viewModel.getCurrentLocation()
-            } else {
-                Snackbar.make(
-                    requireContext(),
-                    requireView(),
-                    "Turn on location",
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAction("Настройки") {
-                        Intent(Settings.ACTION_APPLICATION_SETTINGS)
-                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                        startActivity(intent)
-                    }
-                    .show()
-            }
-        } else {
-            requestPermissions()
-        }
-    }
-
-    private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
-
-    private fun checkPermissions(): Boolean {
-        if (
-            ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
-    }
-
-    private val PERMISSION_ID = 112
-
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
-        )
     }
 }
