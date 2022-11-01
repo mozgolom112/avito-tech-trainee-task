@@ -13,7 +13,8 @@ fun checkPermissions(context: Context): Boolean {
         ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+        ) == PackageManager.PERMISSION_GRANTED || //позволяет использовать approximately location
+        ActivityCompat.checkSelfPermission
             (
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
