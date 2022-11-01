@@ -122,11 +122,26 @@ fun getIconDrawableRes(type: WeatherDetailTypes): Int = when (type) {
     SUNSET -> R.drawable.sunset_icon
 }
 
+fun List<Address>.asDomainModelWithLocalityNullCheck(): List<City>  {
+    val list = mutableListOf<City>()
+    for (addr in this){
+        if (addr.locality != null){
+         list.add(City(
+             lat = addr.latitude,
+             lon = addr.longitude,
+             cityName = addr.locality,
+             country = addr.countryName
+         ))
+        }
+    }
+    return list
+}
+
 fun List<Address>.asDomainModel(): List<City> = map{
     City(
         lat = it.latitude,
         lon = it.longitude,
-        cityName = it.featureName,
+        cityName = it.locality,
         country = it.countryName
     )
 }

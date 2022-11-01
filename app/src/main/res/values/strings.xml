@@ -15,4 +15,5 @@
     <string name="lon_en">Longitude: %1$.2f</string>
     <string name="no_city_avalible_ru">Нет доступных вариантов</string>
     <string name="select_city_from_the_list_below_ru">Выберете город из списка ниже</string>
+    <string name="city_by_location_not_found_ru">Город по вашей локации (%1$.2f;%2$.2f) не найден. Пожалуйста, воспользуйтесь поиском</string>
 </resources>
