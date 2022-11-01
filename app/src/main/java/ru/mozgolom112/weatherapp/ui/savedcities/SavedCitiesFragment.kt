@@ -56,6 +56,26 @@ class SavedCitiesFragment : Fragment() {
         return binding.root
     }
 
+    private fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentSavedCitiesBinding =
+        DataBindingUtil.inflate(inflater, layout, container, false)
+
+    private fun fulfillBinding(binding: FragmentSavedCitiesBinding) {
+        binding.apply {
+            setCurrentCity()
+            lifecycleOwner = viewLifecycleOwner
+            recyclevFavoriteCities.apply {
+                adapter = citiesItemAdapter
+            }
+            txtvCitySearch.setOnClickListener {
+                viewModel.navigateToSearchCity()
+            }
+            btnBack.setOnClickListener { navigateBack() }
+        }
+    }
+
     private fun setObserver() {
         viewModel.apply {
             savedCities.observe(viewLifecycleOwner) {
@@ -76,26 +96,6 @@ class SavedCitiesFragment : Fragment() {
         }
     }
 
-    private fun fulfillBinding(binding: FragmentSavedCitiesBinding) {
-        binding.apply {
-            setCurrentCity()
-            lifecycleOwner = viewLifecycleOwner
-            recyclevFavoriteCities.apply {
-                adapter = citiesItemAdapter
-            }
-            txtvCitySearch.setOnClickListener {
-                viewModel.navigateToSearchCity()
-            }
-        }
-    }
-
-    private fun initBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentSavedCitiesBinding =
-        DataBindingUtil.inflate(inflater, layout, container, false)
-
-
     private fun FragmentSavedCitiesBinding.setCurrentCity() {
         viewModel.currentCity?.let {
             currentCityItem.city = it
@@ -107,7 +107,6 @@ class SavedCitiesFragment : Fragment() {
                 )
             }
         }
-
     }
 
     private fun navigateToSearchCityFragment() {
@@ -118,7 +117,7 @@ class SavedCitiesFragment : Fragment() {
 
     private fun navigateToWeatherDetailsFragment(selectedCity: City) {
         if (selectedCity == viewModel.currentCity) {
-            findNavController().popBackStack() //просто возращяемся на наш экран
+            navigateBack()
         } else {
             val action =
                 SavedCitiesFragmentDirections.actionSavedCitiesFragmentToWeatherDetailsFragment(
@@ -126,6 +125,11 @@ class SavedCitiesFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
+        viewModel.doneNavigating()
+    }
+
+    private fun navigateBack() {
+        findNavController().popBackStack()
         viewModel.doneNavigating()
     }
 }

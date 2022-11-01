@@ -27,7 +27,6 @@ class WeatherDetailsFragment : Fragment() {
 
     private fun initViewModel(): WeatherDetailsViewModel {
         var selectedCity = navArgs<WeatherDetailsFragmentArgs>().value.selectedCity
-        var cityRepository = CityRepository(requireContext())
         val viewModelFactory = WeatherDetailsViewModelFactory(requireContext(), selectedCity)
         val viewModel: WeatherDetailsViewModel by viewModels { viewModelFactory }
         return viewModel

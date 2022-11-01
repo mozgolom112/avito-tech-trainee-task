@@ -12,35 +12,20 @@ import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.domain.DailyWeather
 import ru.mozgolom112.weatherapp.network.RetrofitClient
 import ru.mozgolom112.weatherapp.repository.city.CityRepository
+import ru.mozgolom112.weatherapp.repository.weatherapi.WeatherApiProviderInterface
 import ru.mozgolom112.weatherapp.utils.asDomainModel
 import ru.mozgolom112.weatherapp.utils.consts.DEFAULT_CITY
 import ru.mozgolom112.weatherapp.utils.extensions.getTodayWeather
 import ru.mozgolom112.weatherapp.utils.extensions.getTomorrowWeather
 
 class WeatherDetailsViewModel(
-    val cityRepository: CityRepository,
+    private val cityRepository: CityRepository,
+    private val weatherApiProvider: WeatherApiProviderInterface,
     val selectedCity: City = DEFAULT_CITY
+
 ) : ViewModel() {
 
-//    var selectedCity: City = getRight(_selectedCity)
-//
-//    fun getRight(contructorCity: City){
-//        if (contructorCity!= DEFAULT_CITY){
-//            //Пришел от другого фрагмента
-//            selectedCity = contructorCity //!!
-//        }else{
-//            //Зашли в приложение после перезапуска
-//            val res = cityRepository.getCurrentCity()
-//            if (res != null){
-//                return res
-//            }
-//        }
-//    }
-
-
-
-
-    var dailyWeathers: List<DailyWeather>? = null
+    private var dailyWeathers: List<DailyWeather>? = null
     private val _selectedDayWeather = MutableLiveData<DailyWeather?>(null)
     val selectedDayWeather: LiveData<DailyWeather?>
         get() = _selectedDayWeather
@@ -54,17 +39,19 @@ class WeatherDetailsViewModel(
         get() = _navigateToSavedCities
 
     init {
-//        viewModelScope.launch {
-//            selectedCity = getSelectedCity(cityRepository, _selectedCity)
-//        }
-
         viewModelScope.launch {
-            val response = RetrofitClient.weatherApi.getWeatherByLocation(
-                selectedCity.lat.toString(),
-                selectedCity.lon.toString()
-            )
-            dailyWeathers = response.asDomainModel()
-            _selectedDayWeather.value = dailyWeathers.getTodayWeather()
+
+            try {
+                dailyWeathers = withContext(Dispatchers.IO) {
+                    weatherApiProvider.getWeeklyWeatherForecast(
+                        selectedCity.lat,
+                        selectedCity.lon
+                    )
+                }
+                _selectedDayWeather.value = dailyWeathers.getTodayWeather()
+            } catch (e: Exception) {
+                //CheckInternetConnection or Other
+            }
         }
     }
 
@@ -88,5 +75,7 @@ class WeatherDetailsViewModel(
         _navigateToWeeklyForecast.value = false
         _navigateToSavedCities.value = false
     }
+
+
 }
 

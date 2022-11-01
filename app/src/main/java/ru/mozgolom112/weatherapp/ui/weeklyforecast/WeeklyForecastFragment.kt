@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.adapters.WeeklyForecastAdapter
 import ru.mozgolom112.weatherapp.databinding.FragmentWeeklyForecastBinding
+import ru.mozgolom112.weatherapp.utils.hidekeyboard.hideKeyboard
+import ru.mozgolom112.weatherapp.utils.snackbars.showSnackBarWithMessage
 
 class WeeklyForecastFragment : Fragment() {
 
@@ -27,7 +29,7 @@ class WeeklyForecastFragment : Fragment() {
     private companion object {
         const val layoutId = R.layout.fragment_weekly_forecast
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,12 +54,29 @@ class WeeklyForecastFragment : Fragment() {
                         WeeklyForecastAdapter(requireContext(), list)
                 }
             }
+            errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                if (errorMessage != null) {
+                    hideKeyboard(requireActivity())
+                    showSnackBar(errorMessage)
+                }
+            }
         }
     }
 
     private fun fulfillBinding(binding: FragmentWeeklyForecastBinding) {
         binding.apply {
-            txtvCityName.text = viewModel.city.cityName
+            txtvCityName.text = viewModel.selectedCity.cityName
+            btnBack.setOnClickListener { navigateBack() }
         }
+    }
+
+    //SnackBar
+    private fun showSnackBar(message: String) {
+        showSnackBarWithMessage(requireView(), message)
+        viewModel.showErrorMessage()
+    }
+
+    private fun navigateBack() {
+        findNavController().popBackStack()
     }
 }
