@@ -10,7 +10,8 @@ import ru.mozgolom112.weatherapp.network.dto.NetworkForecast
 import ru.mozgolom112.weatherapp.network.dto.NetworkHour
 import ru.mozgolom112.weatherapp.network.dto.NetworkWeather
 import ru.mozgolom112.weatherapp.network.dto.NetworkWeatherDetails
-import ru.mozgolom112.weatherapp.utils.WeatherDetailTypes.*
+import ru.mozgolom112.weatherapp.utils.consts.WeatherDetailTypes
+import ru.mozgolom112.weatherapp.utils.consts.WeatherDetailTypes.*
 
 fun NetworkWeather.asDomainModel(): List<DailyWeather> {
 
