@@ -101,6 +101,10 @@ class WeatherDetailsViewModel(
         _favorite.value = _favorite.value?.not()
     }
 
+    fun btnUpdateClick() {
+        uploadForecast()
+    }
+
     fun onTodayTabClick() {
         _selectedDayWeather.value = dailyWeathers.getTodayWeather()
     }

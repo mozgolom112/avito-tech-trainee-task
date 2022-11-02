@@ -216,7 +216,18 @@
             android:layout_marginEnd="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/favorites_star_checked_2"
             android:onClick="@{()->vm.btnFavorityClick()}"/>
+
+        <ImageView
+            android:id="@+id/btnUpdateForecast"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnFavority"
+            app:layout_constraintTop_toTopOf="@+id/btnFavority"
+            app:srcCompat="@drawable/update_icon"
+            android:onClick="@{()->vm.btnUpdateClick()}"/>
 
         <include
             android:id="@+id/loadingScreen"
@@ -228,7 +239,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="visible"
+            tools:visibility="gone"
             />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
