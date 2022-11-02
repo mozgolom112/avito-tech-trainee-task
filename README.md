@@ -27,7 +27,7 @@
 
 #### Пример работы можете посмотреть ниже по ссылке
 [Видео работы приложения](https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work_example.mp4)
-<img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work.gif"/>
+<img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work.gif" width="260" height="560"/>
 
 
 ####Скриншоты
