@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import ru.mozgolom112.weatherapp.database.dbentities.CityEntity
 import ru.mozgolom112.weatherapp.utils.consts.DATABASE_NAME
 
-@Database(entities = [CityEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CityEntity::class], version = 3, exportSchema = false)
 abstract class CityDatabase : RoomDatabase() {
     abstract val cityDao: CityDao
 

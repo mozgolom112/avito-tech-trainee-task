@@ -36,5 +36,9 @@ fun setImageUrl(imageView: ImageView, icon_url: String?) {
     }
 }
 
+@BindingAdapter("setFavoriteIcon")
+fun setFavoriteIcon(imageView: ImageView, isChecked: Boolean) =
+    imageView.setImageResource(if (isChecked) R.drawable.favorites_star_checked_2 else R.drawable.favorites_star_unchecked)
+
 @BindingAdapter("imageDrawable")
 fun setImageUrl(imageView: ImageView, drawableIcon: Int) = imageView.setImageResource(drawableIcon)

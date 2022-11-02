@@ -13,9 +13,11 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import ru.mozgolom112.weatherapp.R
 import ru.mozgolom112.weatherapp.adapters.HourItemAdapter
+import ru.mozgolom112.weatherapp.database.CityDatabase
 import ru.mozgolom112.weatherapp.databinding.FragmentWeatherDetailsBinding
 import ru.mozgolom112.weatherapp.domain.DailyWeather
-import ru.mozgolom112.weatherapp.repository.city.CityRepository
+import ru.mozgolom112.weatherapp.repository.city.CityRepositoryProvider
+import ru.mozgolom112.weatherapp.utils.bindingadapters.setFavoriteIcon
 import ru.mozgolom112.weatherapp.utils.extensions.getFirst
 import ru.mozgolom112.weatherapp.utils.extensions.getSecond
 
@@ -27,6 +29,7 @@ class WeatherDetailsFragment : Fragment() {
 
     private fun initViewModel(): WeatherDetailsViewModel {
         var selectedCity = navArgs<WeatherDetailsFragmentArgs>().value.selectedCity
+        //val database = CityDatabase.getInstance(requireContext()).cityDao
         val viewModelFactory = WeatherDetailsViewModelFactory(requireContext(), selectedCity)
         val viewModel: WeatherDetailsViewModel by viewModels { viewModelFactory }
         return viewModel
@@ -56,6 +59,7 @@ class WeatherDetailsFragment : Fragment() {
     private fun setObservers(binding: FragmentWeatherDetailsBinding) {
         viewModel.apply {
             selectedDayWeather.observe(viewLifecycleOwner) { dailyWeather ->
+
                 updateDetailUi(binding, dailyWeather)
                 hourItemAdapter.submitList(dailyWeather?.hours)
             }
@@ -69,6 +73,11 @@ class WeatherDetailsFragment : Fragment() {
                     navigateToSavedCitiesFragment()
                 }
             }
+            favorite.observe(viewLifecycleOwner) {
+                if (it!=null){
+                    setFavoriteIcon(binding.btnFavority, it)
+                }
+            }
         }
     }
 
@@ -77,6 +86,8 @@ class WeatherDetailsFragment : Fragment() {
         dailyWeather: DailyWeather?
     ) {
         binding.apply {
+            txtvCityName.text = viewModel.selectedCity.cityName
+            txtvCountry.text = viewModel.selectedCity.country
             firstWeatherDetail.weatherParameter = dailyWeather?.weatherParameters.getFirst()
             secondWeatherDetail.weatherParameter = dailyWeather?.weatherParameters.getSecond()
         }

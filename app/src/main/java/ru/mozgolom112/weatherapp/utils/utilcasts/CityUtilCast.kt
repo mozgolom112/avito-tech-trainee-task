@@ -1,6 +1,8 @@
 package ru.mozgolom112.weatherapp.utils.utilcasts
 
 import android.location.Address
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import ru.mozgolom112.weatherapp.database.dbentities.CityEntity
 import ru.mozgolom112.weatherapp.domain.City
 import ru.mozgolom112.weatherapp.utils.consts.IS_CURRENT_FALSE
@@ -12,6 +14,10 @@ fun CityEntity.asDomainModel(): City = mapDatabaseCityToDomain(this)
 
 @JvmName("asDomainModelCityEntity")
 fun List<CityEntity>.asDomainModel(): List<City> = map { mapDatabaseCityToDomain(it) }
+
+fun LiveData<List<CityEntity>?>.asDomainModel(): LiveData<List<City>?> = Transformations.map(this){
+    it?.asDomainModel()
+}
 
 fun City.asDatabaseModel(isCurrent: Int = IS_CURRENT_FALSE, isSaved: Int = IS_SAVED_FALSE) = CityEntity(
     lat = this.lat,

@@ -18,6 +18,11 @@ val TEMP_LIST_OF_CITIES = listOf(
     (City(51.509865, -0.118092, "London", "UK")),
     (City(53.123, 42.142, "Ryzan", "Ru")),
     (City(53.541, 42.13, "Moscow", "Ru")),
-    (City(53.56, 42.563, "Moscow", "Ru"))
+    (City(42.56, 42.563, "Tomsk", "Ru")),
+    (City(13.56, 42.563, "Hidrow", "Ru")),
+    (City(63.56, 42.563, "Vi", "Ru")),
+    (City(23.56, 47.563, "OMG", "Ru")),
+    (City(52.56, 45.563, "Ivanovo", "Ru")),
+    (City(52.56, 45.563, "Genya", "Ru"))
 )
 

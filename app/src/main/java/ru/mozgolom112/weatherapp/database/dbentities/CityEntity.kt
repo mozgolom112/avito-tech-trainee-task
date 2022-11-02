@@ -2,7 +2,9 @@ package ru.mozgolom112.weatherapp.database.dbentities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import ru.mozgolom112.weatherapp.utils.consts.*
+import java.util.*
 
 @Entity(tableName = TABLE_CITY, primaryKeys = [COLUMN_CITY_LATITUDE, COLUMN_CITY_LONGITUDE])
 data class CityEntity(

@@ -4,16 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.mozgolom112.weatherapp.domain.City
+import ru.mozgolom112.weatherapp.repository.city.CityRepositoryProviderInterface
 import ru.mozgolom112.weatherapp.utils.consts.TEMP_LIST_OF_CITIES
 
 class SavedCitiesViewModel(
+    private val cityRepository: CityRepositoryProviderInterface,
     val currentCity: City?
 ) : ViewModel() {
-
-    private val _savedCities = MutableLiveData<List<City>?>(null)
-    val savedCities: LiveData<List<City>?>
-        get() = _savedCities
+    val savedCities by lazy(Dispatchers.IO) { cityRepository.getListOfSavedCity() }
 
     private val _navigateToWeatherDetailsWithCity = MutableLiveData<City?>(null)
     val navigateToWeatherDetailsWithCity: LiveData<City?>
@@ -23,15 +26,10 @@ class SavedCitiesViewModel(
     val isNavigatedToSearchCity: LiveData<Boolean>
         get() = _isNavigatedToSearchCity
 
-    init {
-
-        _savedCities.value = TEMP_LIST_OF_CITIES
-    }
-
-
     fun onRemoveSavedCityClick(city: City) {
-        Log.i("SavedCitiesViewModel", "onRemoveSavedCityClick $city")
+        viewModelScope.launch(Dispatchers.IO) { cityRepository.removeSavedCity(city) }
     }
+
 
     fun navigateToWeatherDetails(city: City) {
         Log.i("SavedCitiesViewModel", "navigateToWeatherDetails $city")
@@ -42,7 +40,7 @@ class SavedCitiesViewModel(
         _isNavigatedToSearchCity.value = true
     }
 
-    fun doneNavigating(){
+    fun doneNavigating() {
         _navigateToWeatherDetailsWithCity.value = null
         _isNavigatedToSearchCity.value = false
     }

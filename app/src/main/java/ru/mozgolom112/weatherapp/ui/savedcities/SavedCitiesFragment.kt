@@ -36,7 +36,7 @@ class SavedCitiesFragment : Fragment() {
 
     private fun initViewModel(): SavedCitiesViewModel {
         val currentCity = navArgs<SavedCitiesFragmentArgs>().value.currentCity
-        val viewModelFactory = SavedCitiesViewModelFactory(currentCity)
+        val viewModelFactory = SavedCitiesViewModelFactory(requireContext(), currentCity)
         val viewModel: SavedCitiesViewModel by viewModels { viewModelFactory }
         return viewModel
     }
@@ -52,8 +52,12 @@ class SavedCitiesFragment : Fragment() {
     ): View? {
         val binding: FragmentSavedCitiesBinding = initBinding(inflater, container)
         fulfillBinding(binding)
-        setObserver()
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setObserver()
     }
 
     private fun initBinding(
