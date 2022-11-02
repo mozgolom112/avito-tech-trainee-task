@@ -50,14 +50,6 @@ class SearchCityViewModel(
         }
     }
 
-    private fun errorHandler(e: Exception) {
-        val message = when (e) {
-            is IOException -> "Нет интернет соединения"
-            else -> e?.message ?: e.toString()
-        }
-        updateErrorMessage(message)
-    }
-
     private fun getCityByLocation(data: LocationData): City? =
         try {
             geocoderProvider.getCityByCoordinates(data.latitude, data.longitude)
@@ -87,6 +79,14 @@ class SearchCityViewModel(
         override fun onRequestFailed(errorMessage: String?) {
             _errorMessage.value = errorMessage
         }
+    }
+
+    private fun errorHandler(e: Exception) {
+        val message = when (e) {
+            is IOException -> "Нет интернет соединения"
+            else -> e?.message ?: e.toString()
+        }
+        updateErrorMessage(message)
     }
 
     private fun updateErrorMessage(message: String?) {

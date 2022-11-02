@@ -17,4 +17,7 @@
     <string name="select_city_from_the_list_below_ru">Выберете город из списка ниже</string>
     <string name="city_by_location_not_found_ru">Город по вашей локации (%1$.2f;%2$.2f) не найден. Пожалуйста, воспользуйтесь поиском</string>
     <string name="geolocation_allowed_ru">Использование геолакации разрешено</string>
+    <string name="retry_ru">Обновить</string>
+    <string name="loading_warning_ru">Идет загрузка... Подождите</string>
+    <string name="error_internet_connection_ru">Ошибка соединения. Проверьте интернет соединение</string>
 </resources>

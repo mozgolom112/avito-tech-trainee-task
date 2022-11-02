@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background">
 
+
         <TextView
             android:id="@+id/txtvCityName"
             android:layout_width="wrap_content"
@@ -217,5 +218,18 @@
             app:layout_constraintTop_toTopOf="parent"
             android:onClick="@{()->vm.btnFavorityClick()}"/>
 
+        <include
+            android:id="@+id/loadingScreen"
+            layout="@layout/loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

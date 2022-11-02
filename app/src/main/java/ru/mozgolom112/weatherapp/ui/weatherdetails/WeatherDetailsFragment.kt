@@ -20,6 +20,7 @@ import ru.mozgolom112.weatherapp.repository.city.CityRepositoryProvider
 import ru.mozgolom112.weatherapp.utils.bindingadapters.setFavoriteIcon
 import ru.mozgolom112.weatherapp.utils.extensions.getFirst
 import ru.mozgolom112.weatherapp.utils.extensions.getSecond
+import ru.mozgolom112.weatherapp.utils.extensions.setGoneOrVisible
 
 class WeatherDetailsFragment : Fragment() {
 
@@ -59,9 +60,9 @@ class WeatherDetailsFragment : Fragment() {
     private fun setObservers(binding: FragmentWeatherDetailsBinding) {
         viewModel.apply {
             selectedDayWeather.observe(viewLifecycleOwner) { dailyWeather ->
-
                 updateDetailUi(binding, dailyWeather)
                 hourItemAdapter.submitList(dailyWeather?.hours)
+                resetErrorMessage()
             }
             navigateToWeeklyForecast.observe(viewLifecycleOwner) { isNavigated ->
                 if (isNavigated) {
@@ -74,10 +75,44 @@ class WeatherDetailsFragment : Fragment() {
                 }
             }
             favorite.observe(viewLifecycleOwner) {
-                if (it!=null){
+                if (it != null) {
                     setFavoriteIcon(binding.btnFavority, it)
                 }
             }
+            errorConnection.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    if (it == "LOADING") {
+                        //Установка обычного экрана загрузки
+                        setLoadingScreen(binding)
+                    } else {
+                        //Установка экрана с ошибкой
+                        setErrorScreen(binding)
+                    }
+                } else {
+                    binding.loadingScreen.root.setGoneOrVisible(true)
+                }
+            }
+        }
+    }
+
+    private fun WeatherDetailsViewModel.setErrorScreen(
+        binding: FragmentWeatherDetailsBinding
+    ) {
+        binding.loadingScreen.apply {
+            txtvLoading.text = getString(R.string.error_internet_connection_ru)
+            root.setGoneOrVisible(false)
+            btnRetry.setGoneOrVisible(false)
+            btnRetry.setOnClickListener {
+                uploadForecast()
+                txtvLoading.text = getString(R.string.loading_warning_ru)
+            }
+        }
+    }
+
+    private fun setLoadingScreen(binding: FragmentWeatherDetailsBinding) {
+        binding.loadingScreen.apply {
+            root.setGoneOrVisible(false)
+            btnRetry.setGoneOrVisible(true)
         }
     }
 
