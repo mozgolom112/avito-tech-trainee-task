@@ -26,7 +26,36 @@
 в переменную APP_ID
 
 #### Пример работы можете посмотреть ниже по ссылке
-[Видео работы приложения]()
+[Видео работы приложения](https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work_example.mp4)
+
+####Скриншоты
+
+<table>
+  <tr>
+     <td align="center">Details Weather</td>
+     <td align="center">7 Days Weather Forecast</td>
+     <td align="center">Search City</td>
+
+  </tr>
+  <tr>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/daily_forecast.png"></td>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/weekly_forecast.png"></td>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/search_city.png"></td>
+  </tr>
+
+  <tr>
+    <td align="center">SavedCities</td>
+    <td align="center">Permissions</td>
+<   td align="center">Error screen</td>
+  </tr>
+
+  <tr>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/saved_cities.png"></td>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/get_location_permission.png"></td>
+    <td valign="top"><img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/error_screen.png"></td>
+  </tr>
+ </table>
+ <br>
 
 
 #### Используемые библиотеки
