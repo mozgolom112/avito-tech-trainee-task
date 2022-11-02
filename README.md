@@ -27,6 +27,8 @@
 
 #### Пример работы можете посмотреть ниже по ссылке
 [Видео работы приложения](https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work_example.mp4)
+<img src="https://github.com/mozgolom112/avito-tech-trainee-task/blob/main/videoandscreenshots/work.gif"/>
+
 
 ####Скриншоты
 
@@ -46,7 +48,7 @@
   <tr>
     <td align="center">SavedCities</td>
     <td align="center">Permissions</td>
-<   td align="center">Error screen</td>
+    < td align="center">Error screen</td>
   </tr>
 
   <tr>
